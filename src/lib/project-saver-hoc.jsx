@@ -54,7 +54,9 @@ const ProjectSaverHOC = function (WrappedComponent) {
             ]);
         }
         componentWillMount () {
-            if (typeof window === 'object') {
+            // Кодомандри: проєкт зберігає наша сторінка на сервер сама (автозбереження) — питання редактора
+            // «зміни, можливо, не буде збережено» тут хибне і лякає дитину.
+            if (typeof window === 'object' && !process.env.SCRATCH_COMPAT_ONLY) {
                 // Note: it might be better to use a listener instead of assigning onbeforeunload;
                 // but then it'd be hard to turn this listening off in our tests
                 window.onbeforeunload = e => this.leavePageConfirm(e);
