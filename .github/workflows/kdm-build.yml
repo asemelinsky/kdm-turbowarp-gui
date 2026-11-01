@@ -9,7 +9,7 @@ on:
     inputs:
       root:
         description: 'Шлях на сайті з / наприкінці'
-        default: '/mo/polygon/scratch/gui/'
+        default: '/mo/scratch-gui/'
 
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
     - run: npm run build
       env:
         NODE_ENV: production
-        ROOT: ${{ inputs.root || '/mo/polygon/scratch/gui/' }}
+        ROOT: ${{ inputs.root || '/mo/scratch-gui/' }}
         APP_NAME: 'Кодомандри'
         SCRATCH_COMPAT_ONLY: '1'
         DEFAULT_LOCALE: 'uk'

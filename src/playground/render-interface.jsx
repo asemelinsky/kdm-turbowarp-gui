@@ -46,7 +46,15 @@ import {APP_NAME} from '../lib/brand.js';
 
 import styles from './interface.css';
 
-const isInvalidEmbed = window.parent !== window;
+// Кодомандри: редактор живе у вікні нашої сторінки з того самого домену — це не чуже вбудовування.
+const isSameOriginParent = () => {
+    try {
+        return window.parent.location.origin === window.location.origin;
+    } catch (e) {
+        return false;
+    }
+};
+const isInvalidEmbed = window.parent !== window && !(process.env.SCRATCH_COMPAT_ONLY && isSameOriginParent());
 
 const handleClickAddonSettings = addonId => {
     // addonId might be a string of the addon to focus on, undefined, or an event (treat like undefined)
