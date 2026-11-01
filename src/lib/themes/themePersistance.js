@@ -1,56 +1,30 @@
 import {BLOCKS_CUSTOM, Theme} from '.';
 
-const matchMedia = query => (window.matchMedia ? window.matchMedia(query) : null);
-const PREFERS_HIGH_CONTRAST_QUERY = matchMedia('(prefers-contrast: more)');
-const PREFERS_DARK_QUERY = matchMedia('(prefers-color-scheme: dark)');
-
 const STORAGE_KEY = 'tw:theme';
 
 /**
  * @returns {Theme} detected theme
  */
-const systemPreferencesTheme = () => {
-    if (PREFERS_HIGH_CONTRAST_QUERY && PREFERS_HIGH_CONTRAST_QUERY.matches) {
-        return Theme.highContrast;
-    }
-    if (PREFERS_DARK_QUERY && PREFERS_DARK_QUERY.matches) {
-        return Theme.dark;
-    }
-    return Theme.light;
-};
+// kdm (Кодомандри, Olexii 01.11): редактор завжди світлий, як у відеоуроках, — налаштування Windows / телефона
+// (темний режим, контраст) не враховуємо. Темна тема — лише якщо дитина сама вибере її в меню.
+const systemPreferencesTheme = () => Theme.light;
 
 /**
  * @param {function} onChange callback; no guarantees about arguments
  * @returns {function} call to remove event listeners to prevent memory leak
  */
-const onSystemPreferenceChange = onChange => {
-    if (
-        !PREFERS_HIGH_CONTRAST_QUERY ||
-        !PREFERS_DARK_QUERY ||
-        // Some old browsers don't support addEventListener on media queries
-        !PREFERS_HIGH_CONTRAST_QUERY.addEventListener ||
-        !PREFERS_DARK_QUERY.addEventListener
-    ) {
-        return () => {};
-    }
-
-    PREFERS_HIGH_CONTRAST_QUERY.addEventListener('change', onChange);
-    PREFERS_DARK_QUERY.addEventListener('change', onChange);
-
-    return () => {
-        PREFERS_HIGH_CONTRAST_QUERY.removeEventListener('change', onChange);
-        PREFERS_DARK_QUERY.removeEventListener('change', onChange);
-    };
-};
+// kdm: системні налаштування не стежимо (див. вище) — слухати нічого.
+const onSystemPreferenceChange = () => () => {};
 
 /**
  * @returns {Theme} the theme
  */
+// kdm: вибір теми в меню живе до кінця сесії вкладки (sessionStorage), наступного разу — знову світлий.
 const detectTheme = () => {
     const systemPreferences = systemPreferencesTheme();
 
     try {
-        const local = localStorage.getItem(STORAGE_KEY);
+        const local = sessionStorage.getItem(STORAGE_KEY);
 
         // Migrate legacy preferences
         if (local === 'dark') {
@@ -94,13 +68,13 @@ const persistTheme = theme => {
 
     if (Object.keys(nonDefaultSettings).length === 0) {
         try {
-            localStorage.removeItem(STORAGE_KEY);
+            sessionStorage.removeItem(STORAGE_KEY);
         } catch (e) {
             // ignore
         }
     } else {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(nonDefaultSettings));
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(nonDefaultSettings));
         } catch (e) {
             // ignore
         }

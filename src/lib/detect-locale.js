@@ -15,13 +15,8 @@ export const LANGUAGE_KEY = 'tw:language';
  * @return {string} the preferred locale
  */
 const detectLocale = supportedLocales => {
-    // tw: read language from localStorage
-    try {
-        const storedLanguage = localStorage.getItem(LANGUAGE_KEY);
-        if (storedLanguage && supportedLocales.includes(storedLanguage)) {
-            return storedLanguage;
-        }
-    } catch (e) { /* ignore */ }
+    // kdm (Кодомандри, Olexii 01.11 «мова завжди укр»): збережений раніше вибір мови не читаємо —
+    // мова завжди та, що передає сторінка (?locale=), інакше DEFAULT_LOCALE.
 
     let locale = supportedLocales.includes(process.env.DEFAULT_LOCALE) ? process.env.DEFAULT_LOCALE : 'en'; // default
     let browserLocale = window.navigator.userLanguage || window.navigator.language;
