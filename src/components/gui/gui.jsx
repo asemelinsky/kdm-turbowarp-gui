@@ -228,7 +228,8 @@ const GUIComponent = props => {
                 className={styles.pageWrapper}
                 dir={isRtl ? 'rtl' : 'ltr'}
                 style={{
-                    minWidth: 1024 + Math.max(0, customStageSize.width - 480),
+                    // Кодомандри: поруч буває панель уроку — з малою сценою редактор уміщується від ~860px
+                    minWidth: (process.env.SCRATCH_COMPAT_ONLY ? 860 : 1024) + Math.max(0, customStageSize.width - 480),
                     minHeight: 640 + Math.max(0, customStageSize.height - 360)
                 }}
                 {...componentProps}
