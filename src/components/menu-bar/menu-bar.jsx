@@ -1011,8 +1011,8 @@ class MenuBar extends React.Component {
                             />
                         ) : []))}
                     </div>
-                    {/* tw: add a feedback button */}
-                    <div className={styles.menuBarItem}>
+                    {/* tw: add a feedback button (Кодомандри: без нього — відгук TurboWarp не наш) */}
+                    {!process.env.SCRATCH_COMPAT_ONLY && <div className={styles.menuBarItem}>
                         <a
                             className={styles.feedbackLink}
                             href="https://scratch.mit.edu/users/GarboMuffin/#comments"
@@ -1031,7 +1031,7 @@ class MenuBar extends React.Component {
                                 />
                             </Button>
                         </a>
-                    </div>
+                    </div>}
                 </div>
 
                 <div className={styles.accountInfoGroup}>

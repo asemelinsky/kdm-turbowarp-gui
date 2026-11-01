@@ -12,7 +12,7 @@ const RenderGUI = props => (
         canSave={false}
         basePath={process.env.ROOT}
         canEditTitle
-        enableCommunity
+        enableCommunity={!process.env.SCRATCH_COMPAT_ONLY}
         {...props}
     />
 );

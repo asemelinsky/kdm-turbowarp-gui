@@ -247,7 +247,7 @@ class Interface extends React.Component {
                             canManageFiles
                             canChangeTheme
                             enableSeeInside
-                            onClickAddonSettings={handleClickAddonSettings}
+                            onClickAddonSettings={process.env.SCRATCH_COMPAT_ONLY ? null : handleClickAddonSettings}
                         />
                     </div>
                 ) : null}
@@ -259,7 +259,7 @@ class Interface extends React.Component {
                     }) : null}
                 >
                     <GUI
-                        onClickAddonSettings={handleClickAddonSettings}
+                        onClickAddonSettings={process.env.SCRATCH_COMPAT_ONLY ? null : handleClickAddonSettings}
                         onUpdateProjectTitle={this.handleUpdateProjectTitle}
                         backpackVisible
                         backpackHost="_local_"
