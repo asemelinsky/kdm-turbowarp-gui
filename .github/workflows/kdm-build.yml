@@ -1,0 +1,37 @@
+# Кодомандри: збірка редактора для нашого сайту (ADR CCTweak_MiniCourse docs/adr/2026-11-01-scratch-projects.md).
+# Збирається тут, а не на VPS: збірка важка, на сервері поруч живі сервіси.
+name: kdm-build
+
+on:
+  push:
+    branches: [kdm]
+  workflow_dispatch:
+    inputs:
+      root:
+        description: 'Шлях на сайті з / наприкінці'
+        default: '/mo/polygon/scratch/gui/'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+    - run: npm ci
+    - run: npm run build
+      env:
+        NODE_ENV: production
+        ROOT: ${{ inputs.root || '/mo/polygon/scratch/gui/' }}
+        APP_NAME: 'Кодомандри'
+        SCRATCH_COMPAT_ONLY: '1'
+        DEFAULT_LOCALE: 'uk'
+    - uses: actions/upload-artifact@v4
+      with:
+        name: kdm-gui-build
+        path: build/
+        retention-days: 30

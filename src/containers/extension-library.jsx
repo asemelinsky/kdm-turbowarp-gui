@@ -97,6 +97,7 @@ class ExtensionLibrary extends React.PureComponent {
         };
     }
     componentDidMount () {
+        if (process.env.SCRATCH_COMPAT_ONLY) return;
         if (!this.state.gallery) {
             const timeout = setTimeout(() => {
                 this.setState({
@@ -158,7 +159,11 @@ class ExtensionLibrary extends React.PureComponent {
     }
     render () {
         let library = null;
-        if (this.state.gallery || this.state.galleryError || this.state.galleryTimedOut) {
+        if (process.env.SCRATCH_COMPAT_ONLY) {
+            library = extensionLibraryContent
+                .filter(i => !i.incompatibleWithScratch && !(i.tags || []).includes('tw'))
+                .map(toLibraryItem);
+        } else if (this.state.gallery || this.state.galleryError || this.state.galleryTimedOut) {
             library = extensionLibraryContent.map(toLibraryItem);
             library.push('---');
             if (this.state.gallery) {

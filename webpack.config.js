@@ -184,7 +184,11 @@ module.exports = [
                 'process.env.ENABLE_SERVICE_WORKER': JSON.stringify(process.env.ENABLE_SERVICE_WORKER || ''),
                 'process.env.ROOT': JSON.stringify(root),
                 'process.env.ROUTING_STYLE': JSON.stringify(process.env.ROUTING_STYLE || 'filehash'),
-                'process.env.ENABLE_WINDCHIMES': JSON.stringify(process.env.ENABLE_WINDCHIMES || '')
+                'process.env.ENABLE_WINDCHIMES': JSON.stringify(process.env.ENABLE_WINDCHIMES || ''),
+                // Кодомандри: лише те, що є в Scratch 3 (без доповнень і розширень TurboWarp), мова за замовчуванням
+                'process.env.SCRATCH_COMPAT_ONLY': JSON.stringify(process.env.SCRATCH_COMPAT_ONLY || ''),
+                'process.env.DEFAULT_LOCALE': JSON.stringify(process.env.DEFAULT_LOCALE || 'en'),
+                'process.env.APP_NAME': JSON.stringify(process.env.APP_NAME || '')
             }),
             new HtmlWebpackPlugin({
                 chunks: ['editor'],

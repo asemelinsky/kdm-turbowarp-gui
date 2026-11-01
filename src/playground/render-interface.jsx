@@ -80,7 +80,7 @@ if (AddonChannels.changeChannel) {
     });
 }
 
-runAddons();
+if (!process.env.SCRATCH_COMPAT_ONLY) runAddons();
 
 const Footer = () => (
     <footer className={styles.footer}>

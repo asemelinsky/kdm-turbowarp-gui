@@ -23,7 +23,7 @@ const detectLocale = supportedLocales => {
         }
     } catch (e) { /* ignore */ }
 
-    let locale = 'en'; // default
+    let locale = supportedLocales.includes(process.env.DEFAULT_LOCALE) ? process.env.DEFAULT_LOCALE : 'en'; // default
     let browserLocale = window.navigator.userLanguage || window.navigator.language;
     browserLocale = browserLocale.toLowerCase();
     // try to set locale from browserLocale
