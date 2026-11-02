@@ -2,9 +2,11 @@ import {STAGE_DISPLAY_SIZES, SMALL_STAGE_MAX_HEIGHT} from '../lib/layout-constan
 
 const SET_STAGE_SIZE = 'scratch-gui/StageSize/SET_STAGE_SIZE';
 
-// Кодомандри: невисоке вікно — мала сцена з першого кадру (SMALL_STAGE_MAX_HEIGHT).
+// Кодомандри: планшет (керування пальцем) з невисоким вікном — мала сцена з першого кадру (SMALL_STAGE_MAX_HEIGHT).
+// Лише планшет (Olexii 02.11 «саме тільки для планшетів»): комп'ютер з мишею — як у Scratch, велика.
 const isLowWindow = () => typeof window !== 'undefined' && window.innerHeight > 0 &&
-    window.innerHeight < SMALL_STAGE_MAX_HEIGHT;
+    window.innerHeight < SMALL_STAGE_MAX_HEIGHT &&
+    !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 
 const initialState = {
     stageSize: isLowWindow() ? STAGE_DISPLAY_SIZES.small : STAGE_DISPLAY_SIZES.full
