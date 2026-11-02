@@ -45,6 +45,13 @@ const FIXED_WIDTH = 480;
  */
 const UNCONSTRAINED_NON_STAGE_WIDTH = 1096 - FIXED_WIDTH;
 
+/**
+ * Кодомандри: вікно редактора нижче за це — сцена з першого кадру мала (планшет лежачи, ноутбук з невисоким екраном),
+ * інакше під великою сценою список спрайтів стискається до смужки (скрін Olexii з планшета, 02.11). Велику дитина
+ * вмикає кнопкою над сценою, як завжди.
+ */
+const SMALL_STAGE_MAX_HEIGHT = 640;
+
 const STAGE_DISPLAY_SCALE_METADATA = {
     [STAGE_DISPLAY_SIZES.large]: {
         width: FIXED_WIDTH
@@ -66,5 +73,6 @@ export {
     STAGE_DISPLAY_SIZES,
     STAGE_SIZE_MODES,
     FIXED_WIDTH,
+    SMALL_STAGE_MAX_HEIGHT,
     UNCONSTRAINED_NON_STAGE_WIDTH
 };
